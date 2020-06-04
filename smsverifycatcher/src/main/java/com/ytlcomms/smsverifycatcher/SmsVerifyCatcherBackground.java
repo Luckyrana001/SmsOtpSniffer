@@ -3,9 +3,6 @@ package com.ytlcomms.smsverifycatcher;
 import android.app.Service;
 import android.content.IntentFilter;
 
-import com.ytlcomms.smsverifycatcher.OnSmsCatchListener;
-import com.ytlcomms.smsverifycatcher.SmsReceiver;
-
 public class SmsVerifyCatcherBackground {
 
     private Service activity;
@@ -23,7 +20,7 @@ public class SmsVerifyCatcherBackground {
 
 
     public void onStart() {
-            registerReceiver();
+        registerReceiver();
 
     }
 

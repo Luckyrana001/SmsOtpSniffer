@@ -1,4 +1,5 @@
 package com.ytlcomms.smsSniffer;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -25,15 +26,17 @@ import java.util.regex.Pattern;
 
 public class ForegroundService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
+    private static final String TAG = MainActivity.class.getSimpleName();
     private SmsVerifyCatcherBackground smsVerifyCatcher;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
-    private static final String TAG = MainActivity.class.getSimpleName();
     private String userId;
+
     @Override
     public void onCreate() {
         super.onCreate();
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //init SmsVerifyCatcher
@@ -128,14 +131,6 @@ public class ForegroundService extends Service {
         startForeground(1, notification);
 
 
-
-
-
-
-
-
-
-
         //do heavy work on a background thread
         //stopSelf();
         return START_NOT_STICKY;
@@ -158,6 +153,7 @@ public class ForegroundService extends Service {
         String date = dateTimeArray[0];
         return date;
     }
+
     private String parseHsbcTime(String message) {
         String[] dateAndTime = message.split("on ");
         String dateTime = dateAndTime[1];
@@ -174,6 +170,7 @@ public class ForegroundService extends Service {
         String date = dateTimeArray[0];
         return date;
     }
+
     private String parseMaybankTime(String message) {
         String[] dateAndTime = message.split("mins.");
         String dateTime = dateAndTime[1];
@@ -181,6 +178,7 @@ public class ForegroundService extends Service {
         String time = dateTimeArray[1];
         return time;
     }
+
     private String parseMaybankAmount(String message) {
         String[] dateAndTime = message.split("MYR ");
         String dateTime = dateAndTime[1];
@@ -200,9 +198,9 @@ public class ForegroundService extends Service {
     /**
      * Creating new message node under 'message'
      */
-    private void saveMessage(String amount, String bank,String date, String orignalMessage,String otp, String time) {
+    private void saveMessage(String amount, String bank, String date, String orignalMessage, String otp, String time) {
         userId = mFirebaseDatabase.push().getKey();
-        Messages user = new Messages(amount,bank,date,orignalMessage,otp,time);
+        Messages user = new Messages(amount, bank, date, orignalMessage, otp, time);
         mFirebaseDatabase.child(userId).setValue(user);
         addUserChangeListener();
     }
@@ -237,6 +235,7 @@ public class ForegroundService extends Service {
             }
         });
     }
+
     /**
      * Parse verification code
      *
@@ -257,11 +256,13 @@ public class ForegroundService extends Service {
     public void onDestroy() {
         super.onDestroy();
     }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(

@@ -1,4 +1,3 @@
-
 package com.ytlcomms.smsverifycatcher;
 
 import android.content.BroadcastReceiver;
@@ -16,6 +15,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     /**
      * Set result callback
+     *
      * @param callback OnSmsCatchListener
      */
     public void setCallback(OnSmsCatchListener<String> callback) {

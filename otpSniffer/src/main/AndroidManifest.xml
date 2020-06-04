@@ -16,7 +16,8 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity android:name="com.ytlcomms.smsSniffer.MainActivity">
+        <activity android:name="com.ytlcomms.smsSniffer.MainActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

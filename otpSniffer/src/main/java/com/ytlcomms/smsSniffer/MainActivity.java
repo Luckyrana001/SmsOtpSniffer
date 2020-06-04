@@ -1,8 +1,10 @@
 package com.ytlcomms.smsSniffer;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,23 +29,24 @@ import com.ytlcomms.smsverifycatcher.SmsVerifyCatcher;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.ytlcomms.smsverifycatcher.SmsVerifyCatcher.permissionGranted;
+import static com.ytlcomms.smsverifycatcher.SmsVerifyCatcher.PERMISSION_REQUEST_CODE;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private SmsVerifyCatcher smsVerifyCatcher;
     private DatabaseReference mFirebaseDatabase;
     private FirebaseDatabase mFirebaseInstance;
-    private static final String TAG = MainActivity.class.getSimpleName();
     private String userId;
 
-    private TextView bankNameTv,timeTv,dateTv,amountTv,fullMessageTv;
-    private Button startServiceBtn,stopServiceBtn;
+    private TextView bankNameTv, timeTv, dateTv, amountTv, fullMessageTv;
+    private Button startServiceBtn, stopServiceBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // Displaying toolbar icon
+        // Displaying toolbar icon
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         getSupportActionBar().setTitle(getString(R.string.app_name));
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         checkServiceIsRuningOrNot();
 
-        final EditText etCode =  findViewById(R.id.et_code);
+        final EditText etCode = findViewById(R.id.et_code);
         bankNameTv = findViewById(R.id.bankNameTv);
         timeTv = findViewById(R.id.timeTv);
         dateTv = findViewById(R.id.dateTv);
@@ -106,14 +110,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                         etCode.setText(otp);
-                        bankNameTv.setText("Bank Name - "+bank);
-                        timeTv.setText("Time - "+time);
-                        dateTv.setText("Date - "+date);
-                        amountTv.setText("Amount - RM "+amount);
+                        bankNameTv.setText("Bank Name - " + bank);
+                        timeTv.setText("Time - " + time);
+                        dateTv.setText("Date - " + date);
+                        amountTv.setText("Amount - RM " + amount);
                         fullMessageTv.setText(orignalMessage);
 
 
-                       // saveMessage(amount, bank, date, orignalMessage, otp, time);
+                        // saveMessage(amount, bank, date, orignalMessage, otp, time);
 
                     } else {
 
@@ -125,13 +129,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         String orignalMessage = message;
 
                         etCode.setText(otp);
-                        bankNameTv.setText("Bank Name - "+bank);
-                        timeTv.setText("Time - "+time);
-                        dateTv.setText("Date - "+date);
-                        amountTv.setText("Amount - RM "+amount);
+                        bankNameTv.setText("Bank Name - " + bank);
+                        timeTv.setText("Time - " + time);
+                        dateTv.setText("Date - " + date);
+                        amountTv.setText("Amount - RM " + amount);
                         fullMessageTv.setText(orignalMessage);
 
-                       // saveMessage(amount, bank, date, orignalMessage, otp, time);
+                        // saveMessage(amount, bank, date, orignalMessage, otp, time);
                     }
 
                 } catch (Exception e) {
@@ -141,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         //set phone number filter if needed
-       // smsVerifyCatcher.setPhoneNumberFilter("777");
-       // smsVerifyCatcher.setFilter("regexp");
+        // smsVerifyCatcher.setPhoneNumberFilter("777");
+        // smsVerifyCatcher.setFilter("regexp");
 
 
     }
@@ -154,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String date = dateTimeArray[0];
         return date;
     }
+
     private String parseHsbcTime(String message) {
         String[] dateAndTime = message.split("on ");
         String dateTime = dateAndTime[1];
@@ -170,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String date = dateTimeArray[0];
         return date;
     }
+
     private String parseMaybankTime(String message) {
         String[] dateAndTime = message.split("mins.");
         String dateTime = dateAndTime[1];
@@ -177,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String time = dateTimeArray[1];
         return time;
     }
+
     private String parseMaybankAmount(String message) {
         String[] dateAndTime = message.split("MYR ");
         String dateTime = dateAndTime[1];
@@ -196,9 +203,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Creating new message node under 'message'
      */
-    private void saveMessage(String amount, String bank,String date, String orignalMessage,String otp, String time) {
+    private void saveMessage(String amount, String bank, String date, String orignalMessage, String otp, String time) {
         userId = mFirebaseDatabase.push().getKey();
-        Messages user = new Messages(amount,bank,date,orignalMessage,otp,time);
+        Messages user = new Messages(amount, bank, date, orignalMessage, otp, time);
         mFirebaseDatabase.child(userId).setValue(user);
         addUserChangeListener();
     }
@@ -233,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
     /**
      * Parse verification code
      *
@@ -273,12 +281,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.startServiceBtn:
-                if(permissionGranted)
-                startService();
-                else
-                    Toast.makeText(this, "Please accept SMS Read Permission to Continue!", Toast.LENGTH_SHORT).show();
+                String requiredPermission = Manifest.permission.READ_SMS;
+                int checkVal = this.checkCallingOrSelfPermission(requiredPermission);
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+                        == PackageManager.PERMISSION_GRANTED &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+                                == PackageManager.PERMISSION_GRANTED) {
+                    startService();
+                } else {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.RECEIVE_SMS,
+                                    Manifest.permission.READ_SMS}, PERMISSION_REQUEST_CODE);
+                }
+
                 break;
 
             case R.id.stopServiceBtn:
@@ -294,17 +311,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkServiceIsRuningOrNot();
 
     }
+
     public void stopService() {
         Intent serviceIntent = new Intent(this, ForegroundService.class);
         stopService(serviceIntent);
         checkServiceIsRuningOrNot();
     }
 
-    public void checkServiceIsRuningOrNot(){
-        if(isMyServiceRunning(ForegroundService.class)){
+    public void checkServiceIsRuningOrNot() {
+        if (isMyServiceRunning(ForegroundService.class)) {
             startServiceBtn.setVisibility(View.GONE);
             stopServiceBtn.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             startServiceBtn.setVisibility(View.VISIBLE);
             stopServiceBtn.setVisibility(View.GONE);
         }

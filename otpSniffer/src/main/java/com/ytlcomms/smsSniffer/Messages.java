@@ -1,74 +1,74 @@
 package com.ytlcomms.smsSniffer;
 
-public class Messages
-{
+public class Messages {
 
 
-        public String getAmount() {
-            return amount;
-        }
+    public String amount;
+    public String bank;
+    public String date;
+    public String orignalMessage;
+    public String otp;
+    public String time;
 
-        public void setAmount(String amount) {
-            this.amount = amount;
-        }
+    // Default constructor required for calls to
+    // DataSnapshot.getValue(User.class)
+    public Messages() {
+    }
 
-        public String getBank() {
-            return bank;
-        }
+    public Messages(String amount, String bank, String date, String orignalMessage, String otp, String time) {
+        this.amount = amount;
+        this.bank = bank;
+        this.date = date;
+        this.orignalMessage = orignalMessage;
+        this.otp = otp;
+        this.time = time;
+    }
 
-        public void setBank(String bank) {
-            this.bank = bank;
-        }
+    public String getAmount() {
+        return amount;
+    }
 
-        public String getDate() {
-            return date;
-        }
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
-        public void setDate(String date) {
-            this.date = date;
-        }
+    public String getBank() {
+        return bank;
+    }
 
-        public String getOrignalMessage() {
-            return orignalMessage;
-        }
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
 
-        public void setOrignalMessage(String orignalMessage) {
-            this.orignalMessage = orignalMessage;
-        }
+    public String getDate() {
+        return date;
+    }
 
-        public String getOtp() {
-            return otp;
-        }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-        public void setOtp(String otp) {
-            this.otp = otp;
-        }
+    public String getOrignalMessage() {
+        return orignalMessage;
+    }
 
-        public String getTime() {
-            return time;
-        }
+    public void setOrignalMessage(String orignalMessage) {
+        this.orignalMessage = orignalMessage;
+    }
 
-        public void setTime(String time) {
-            this.time = time;
-        }
-        public String amount;
-        public String bank;
-        public String date;
-        public String orignalMessage;
-        public String otp;
-        public String time;
+    public String getOtp() {
+        return otp;
+    }
 
-        // Default constructor required for calls to
-        // DataSnapshot.getValue(User.class)
-        public Messages() {
-        }
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
 
-        public Messages(String amount, String bank,String date, String orignalMessage,String otp, String time) {
-            this.amount = amount;
-            this.bank = bank;
-            this.date = date;
-            this.orignalMessage = orignalMessage;
-            this.otp = otp;
-            this.time = time;
-        }
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
