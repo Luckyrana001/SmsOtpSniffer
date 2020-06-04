@@ -1,5 +1,5 @@
 # SmsOtpSniffer - an improved copy of SmsVerifyCatcher library
-What's New - i. Use of Foreground Service to get OTP and other details ii. gradle version upgraded
+What's New - 1. Use of Foreground Service to get OTP and other details 2. gradle version upgraded 3. Sms Details Posted and saved in Firebase Realtime Database
 
 [![codebeat badge](https://codebeat.co/badges/0d0a3e88-6da8-4e43-a0fc-999af604d0b4)](https://codebeat.co/projects/github-com-stfalcon-studio-smsverifycatcher-master) [ ![Download](https://api.bintray.com/packages/bevzaanton/maven/SmsVerifyCatcher/images/download.svg) ](https://bintray.com/bevzaanton/maven/SmsVerifyCatcher/_latestVersion)
 
