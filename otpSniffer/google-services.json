@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "929028166318",
+    "firebase_url": "https://otpsniffer.firebaseio.com",
+    "project_id": "otpsniffer",
+    "storage_bucket": "otpsniffer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929028166318:android:d1ee37e489fcd6f3",
+        "android_client_info": {
+          "package_name": "com.x.qz.poc.otpsniffer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929028166318-56gs0r4gnpends7jgn3eosnrcmq8prbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlmLWHTGvth2E_ABNxk4XMeFbSs42bcXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929028166318-56gs0r4gnpends7jgn3eosnrcmq8prbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929028166318:android:59fd442b22e278c63d133f",
+        "android_client_info": {
+          "package_name": "com.ytlcomms.smsSniffer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929028166318-56gs0r4gnpends7jgn3eosnrcmq8prbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlmLWHTGvth2E_ABNxk4XMeFbSs42bcXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929028166318-56gs0r4gnpends7jgn3eosnrcmq8prbo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
