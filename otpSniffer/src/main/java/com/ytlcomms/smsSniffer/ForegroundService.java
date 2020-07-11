@@ -21,6 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.ytlcomms.smsverifycatcher.OnSmsCatchListener;
 import com.ytlcomms.smsverifycatcher.SmsVerifyCatcherBackground;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -198,10 +202,24 @@ public class ForegroundService extends Service {
     /**
      * Creating new message node under 'message'
      */
-    private void saveMessage(String amount, String bank, String date, String orignalMessage, String otp, String time) {
+    private void saveMessage(String amount, String bank, String dateMsg, String orignalMessage, String otp, String time) {
+
+        Date date = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss.SSS a");
+        String strDate = dateFormat.format(date);
+        strDate = strDate.replace("-", "");
+        strDate = strDate.replace(" ", "");
+        strDate = strDate.replace(":", "");
+        strDate = strDate.replace(".", "");
+
         userId = mFirebaseDatabase.push().getKey();
-        Messages user = new Messages(amount, bank, date, orignalMessage, otp, time);
-        mFirebaseDatabase.child(userId).setValue(user);
+        Messages user = new Messages(amount, bank, dateMsg, orignalMessage, otp, time);
+        //mFirebaseDatabase.child(userId).child("lucky1").setValue(user);
+        mFirebaseDatabase.child(strDate).setValue(user);
+
         addUserChangeListener();
     }
 
