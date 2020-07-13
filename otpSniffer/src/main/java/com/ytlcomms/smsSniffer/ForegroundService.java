@@ -208,7 +208,8 @@ public class ForegroundService extends Service {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss.SSS a");
+        //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss.SSS a");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String strDate = dateFormat.format(date);
         strDate = strDate.replace("-", "");
         strDate = strDate.replace(" ", "");
@@ -222,6 +223,7 @@ public class ForegroundService extends Service {
 
         addUserChangeListener();
     }
+
 
     /**
      * message data change listener
