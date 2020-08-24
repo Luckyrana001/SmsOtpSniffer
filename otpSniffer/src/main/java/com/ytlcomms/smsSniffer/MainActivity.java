@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopServiceBtn = findViewById(R.id.stopServiceBtn);
         stopServiceBtn.setOnClickListener(this);
 
-        checkServiceIsRuningOrNot();
+
 
         final EditText etCode = findViewById(R.id.et_code);
         bankNameTv = findViewById(R.id.bankNameTv);
@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         fullMessageTv.setText(orignalMessage);
 
 
-                        // saveMessage(amount, bank, date, orignalMessage, otp, time);
+                        if (!isMyServiceRunning(ForegroundService.class))
+                            saveMessage(amount, bank, date, orignalMessage, otp, time);
 
                     } else {
 
@@ -134,7 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         amountTv.setText("Amount - RM " + amount);
                         fullMessageTv.setText(orignalMessage);
 
-                        // saveMessage(amount, bank, date, orignalMessage, otp, time);
+                        if (!isMyServiceRunning(ForegroundService.class))
+                            saveMessage(amount, bank, date, orignalMessage, otp, time);
                     }
 
                 } catch (Exception e) {
@@ -148,6 +150,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // smsVerifyCatcher.setFilter("regexp");
 
 
+        // Start service if not runing
+        if (!isMyServiceRunning(ForegroundService.class))
+            startService();
+
+
+        checkServiceIsRuningOrNot();
     }
 
     private String parseMaybankDate(String message) {
